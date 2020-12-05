@@ -12,7 +12,7 @@
         android:layout_height="47dp"
         android:layout_marginTop="300dp"
         android:onClick="writePhraseToIgnore"
-        android:text="Ignore"
+        android:text="@string/ignore"
         app:layout_constraintEnd_toStartOf="@+id/button"
         app:layout_constraintHorizontal_bias="0.727"
         app:layout_constraintStart_toStartOf="parent"
@@ -31,7 +31,8 @@
         app:layout_constraintEnd_toStartOf="@+id/button"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:autofillHints="" />
 
     <Button
         android:id="@+id/button"
@@ -43,7 +44,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:onClick="writePhraseToCorrect"
-        android:text="Correct"
+        android:text="@string/correct"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/editTextTextPersonName"
@@ -53,7 +54,7 @@
         android:id="@+id/engText"
         android:layout_width="385dp"
         android:layout_height="164dp"
-        android:text="TextView"
+        android:text="@string/english_phrase"
         tools:layout_editor_absoluteX="17dp"
         tools:layout_editor_absoluteY="20dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

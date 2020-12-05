@@ -9,10 +9,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.io.BufferedReader;
 import java.io.FileWriter;   // Import the FileWriter class
 import java.io.IOException;  // Import the IOException class to handle errors
 import java.io.File;  // Import the File class
 import java.io.FileNotFoundException;  // Import this class to handle errors
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Scanner; // Import the Scanner class to read text files
 import java.util.*;
 
@@ -31,35 +34,48 @@ public class MainActivity extends AppCompatActivity {
         String path = System.getProperty("user.dir");
         String whole_path = path + "/src/file/" + filename;
 //        System.out.println(whole_path);
-//        System.out.println("/home/cosc/student/ejd83/IdeaProjects/Kiri_subtitles/src/file" + "/pop phrases.txt");
+//        System.out.println("/home/cosc/student/ejd83/IdeaProjects/Kiri_subtitles/src/file" + "/pop_phrases.txt");
         return whole_path;
     }
 
 
     public Deque<String> getNewPhrases() {
+        String str = "";
         Deque<String> deque
                 = new LinkedList<String>();
+        InputStream ins = getResources().openRawResource(
+                getResources().getIdentifier("pop_phrases",
+                        "raw", getPackageName()));
         try {
-            String path = System.getProperty("user.dir");
-            String whole_path = getFullPath("pop phrases.txt");
-            File myObj = new File(whole_path);
-            Scanner myReader = new Scanner(myObj);
-            while (myReader.hasNextLine()) {
-                String data = myReader.nextLine();
+//            File myObj = new File(whole_path);
+//            Scanner myReader = new Scanner(myObj);
+//            while (myReader.hasNextLine()) {
+//                String data = myReader.nextLine();
 //                    System.out.println(data);
-                if (!data.equals("")) {
-                    deque.add(data);
+//                if (!data.equals("")) {
+//                    deque.add(data);
+//                }
+//            }
+            //                System.out.println(deque);
+//            myReader.close();
+
+            BufferedReader reader = new BufferedReader(new InputStreamReader(ins));
+            if (ins != null) {
+                while ((str = reader.readLine()) != null) {
+                    if (!str.equals("")) {
+                        deque.add(str);
+                    }
+                }
+            }     } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+                try {
+                    ins.close();
+                } catch (Throwable ignore) {
                 }
             }
-            //                System.out.println(deque);
-            myReader.close();
-
-        } catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
+            return deque;
         }
-        return deque;
-    }
 
     public String getPhrase(Deque<String> phrases) {
         return phrases.pop();
@@ -72,11 +88,11 @@ public class MainActivity extends AppCompatActivity {
             String filepath = getFullPath("new_phrases.txt");
 
             FileWriter myWriter = new FileWriter(filepath, true);
-            myWriter.write(engPhrase + " : " + kirPhrase + "\n\n");
+            if (kirPhrase.length() > 0) myWriter.write(engPhrase + " : " + kirPhrase + "\n\n");
             myWriter.close();
-            System.out.println("Successfully wrote to the file.");
+//            System.out.println("Successfully wrote to the file.");
         } catch (IOException e) {
-            System.out.println("An error occurred.");
+//            System.out.println("An error occurred.");
             e.printStackTrace();
 
         }
@@ -91,11 +107,11 @@ public class MainActivity extends AppCompatActivity {
 //            if (newPhrase) filepath = getFullPath("new_phrases.txt");
 
             FileWriter myWriter = new FileWriter(filepath, true);
-            myWriter.write(engPhrase + " : " + kirPhrase + "\n\n");
+            myWriter.write(engPhrase + "\n\n");
             myWriter.close();
-            System.out.println("Successfully wrote to the file.");
+//            System.out.println("Successfully wrote to the file.");
         } catch (IOException e) {
-            System.out.println("An error occurred.");
+//            System.out.println("An error occurred.");
             e.printStackTrace();
 
         }
@@ -104,9 +120,11 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-//        phrases = getNewPhrases();
+        phrases = getNewPhrases();
 //        engPhrase = getPhrase(phrases);
-        engPhrase = "hi";
+//        engPhrase = "hi";
+        TextView engText = (TextView)findViewById(R.id.engText);
+//        engText.setText(engPhrase);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -117,17 +135,19 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 
              engPhrase = getPhrase(phrases);
+//             engPhrase = "hi";
+             TextView engText = (TextView)findViewById(R.id.engText);
              engText.setText(engPhrase);
          }
         });
-
-        clickhere2.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-
-                engPhrase = getPhrase(phrases);
-                engText.setText(engPhrase);
-            }
-        });
+//
+//        clickhere2.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View v) {
+//
+//                engPhrase = getPhrase(phrases);
+//                engText.setText(engPhrase);
+//            }
+//        });
     }
 
     /** Called when the user taps the Send button */
