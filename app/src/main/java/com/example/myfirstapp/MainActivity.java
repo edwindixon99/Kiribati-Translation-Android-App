@@ -38,14 +38,47 @@ public class MainActivity extends AppCompatActivity {
         return whole_path;
     }
 
-
-    public Deque<String> getNewPhrases() {
-        String str = "";
+    public Deque<String> getFinishedPhrases(String filename) {
+        String str;
+        String[] splitted;
         Deque<String> deque
                 = new LinkedList<String>();
         InputStream ins = getResources().openRawResource(
+                getResources().getIdentifier(filename,
+                        "raw", getPackageName()));
+        try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(ins));
+            if (ins != null) {
+                while ((str = reader.readLine()) != null) {
+                    if (!str.equals("")) {
+                        splitted = str.split(":");
+
+                        deque.add(splitted[0]);
+                    }
+                }
+            }     } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                ins.close();
+            } catch (Throwable ignore) {
+            }
+        }
+        return deque;
+    }
+
+
+    public Deque<String> getNewPhrases() {
+        Boolean alreadyProccessed;
+        String str = "";
+        Deque<String> deque
+                = new LinkedList<String>();
+        Deque<String> blacklisted =  getFinishedPhrases("bl_phrases");
+        Deque<String> donelisted =  getFinishedPhrases("new_phrases");
+        InputStream ins = getResources().openRawResource(
                 getResources().getIdentifier("pop_phrases",
                         "raw", getPackageName()));
+
         try {
 //            File myObj = new File(whole_path);
 //            Scanner myReader = new Scanner(myObj);
@@ -62,7 +95,23 @@ public class MainActivity extends AppCompatActivity {
             BufferedReader reader = new BufferedReader(new InputStreamReader(ins));
             if (ins != null) {
                 while ((str = reader.readLine()) != null) {
-                    if (!str.equals("")) {
+                    alreadyProccessed = Boolean.FALSE;
+
+                    for (String i : blacklisted) {
+                        if (i.equals(str)) {
+                            alreadyProccessed = Boolean.TRUE;
+                            break;
+                        }
+                    }
+                    if (!alreadyProccessed) {
+                        for (String i : donelisted) {
+                            if (i.equals(str)) {
+                                alreadyProccessed = Boolean.TRUE;
+                                break;
+                            }
+                        }
+                    }
+                    if (!alreadyProccessed && !str.equals("")) {
                         deque.add(str);
                     }
                 }
@@ -134,20 +183,20 @@ public class MainActivity extends AppCompatActivity {
         clickhere.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-             engPhrase = getPhrase(phrases);
+                engPhrase = getPhrase(phrases);
 //             engPhrase = "hi";
-             TextView engText = (TextView)findViewById(R.id.engText);
-             engText.setText(engPhrase);
+                 TextView engText = (TextView)findViewById(R.id.engText);
+                 engText.setText(engPhrase);
          }
         });
-//
-//        clickhere2.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View v) {
-//
-//                engPhrase = getPhrase(phrases);
-//                engText.setText(engPhrase);
-//            }
-//        });
+
+        clickhere2.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                engPhrase = getPhrase(phrases);
+                TextView engText = (TextView)findViewById(R.id.engText);
+                engText.setText(engPhrase);
+            }
+        });
     }
 
     /** Called when the user taps the Send button */
