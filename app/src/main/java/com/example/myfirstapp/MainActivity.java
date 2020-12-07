@@ -2,6 +2,7 @@ package com.example.myfirstapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -130,6 +131,25 @@ public class MainActivity extends AppCompatActivity {
         return phrases.pop();
     }
 
+
+    public void writeFileOnInternalStorage(Context mcoContext, String sFileName, String sBody){
+        File dir = new File(mcoContext.getFilesDir(), "mydir");
+        if(!dir.exists()){
+            dir.mkdir();
+        }
+
+        try {
+            File gpxfile = new File(dir, sFileName);
+            FileWriter writer = new FileWriter(gpxfile);
+            writer.append(sBody);
+            writer.flush();
+            writer.close();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+
     public void writePhraseToCorrect(View view) {
         try {
             EditText editText = (EditText) findViewById(R.id.editText);
@@ -147,6 +167,9 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
+
+
 
     public void writePhraseToIgnore(View view) {
         try {
