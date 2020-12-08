@@ -132,18 +132,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void writeFileOnInternalStorage(Context mcoContext, String sFileName, String sBody){
-        File dir = new File(mcoContext.getFilesDir(), "mydir");
-        if(!dir.exists()){
-            dir.mkdir();
-        }
+    public void writeFileOnInternalStorage(Context mcoContext, String sFileName){
+        File directory = new File("path_to_directory");
+        try {
+            if(!file.exists()) {
+                directory.createNewFile();
+            }
+            File dataFile = new File(directory, "Your File Name");
 
         try {
+            EditText editText = (EditText) findViewById(R.id.editText);
+            String kirPhrase = editText.getText().toString();
+
             File gpxfile = new File(dir, sFileName);
             FileWriter writer = new FileWriter(gpxfile);
-            writer.append(sBody);
+            writer.append(engPhrase + " : " + kirPhrase + "\n\n");
             writer.flush();
             writer.close();
+
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -151,42 +157,27 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void writePhraseToCorrect(View view) {
-        try {
-            EditText editText = (EditText) findViewById(R.id.editText);
-            String kirPhrase = editText.getText().toString();
-            String filepath = getFullPath("new_phrases.txt");
+        EditText editText = (EditText) findViewById(R.id.editText);
+        String kirPhrase = editText.getText().toString();
+    //            String filepath = getFullPath("new_phrases.txt");
+        String sFileName = "new_phrases.txt";
 
-            FileWriter myWriter = new FileWriter(filepath, true);
-            if (kirPhrase.length() > 0) myWriter.write(engPhrase + " : " + kirPhrase + "\n\n");
-            myWriter.close();
-//            System.out.println("Successfully wrote to the file.");
-        } catch (IOException e) {
-//            System.out.println("An error occurred.");
-            e.printStackTrace();
-
-        }
-
+    //            FileWriter myWriter = new FileWriter(filepath, true);
+        if (kirPhrase.length() > 0) writeFileOnInternalStorage(this, sFileName);
+    //            myWriter.close();
+    //            System.out.println("Successfully wrote to the file.");
     }
 
 
 
 
     public void writePhraseToIgnore(View view) {
-        try {
-            EditText editText = (EditText) findViewById(R.id.editText);
-            String kirPhrase = editText.getText().toString();
-            String filepath = getFullPath("bl_phrases.txt");
-//            if (newPhrase) filepath = getFullPath("new_phrases.txt");
+        EditText editText = (EditText) findViewById(R.id.editText);
+        String kirPhrase = editText.getText().toString();
+        String sFileName = "bl_phrases.txt";
+//        String filepath = getFullPath("bl_phrases.txt");
+        writeFileOnInternalStorage(this, sFileName);
 
-            FileWriter myWriter = new FileWriter(filepath, true);
-            myWriter.write(engPhrase + "\n\n");
-            myWriter.close();
-//            System.out.println("Successfully wrote to the file.");
-        } catch (IOException e) {
-//            System.out.println("An error occurred.");
-            e.printStackTrace();
-
-        }
 
     }
 
