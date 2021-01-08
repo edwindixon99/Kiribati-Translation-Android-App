@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.FileWriter;   // Import the FileWriter class
@@ -131,56 +132,6 @@ public class MainActivity extends AppCompatActivity {
         return phrases.pop();
     }
 
-
-    public void writeFileOnInternalStorage(Context mcoContext, String sFileName){
-        File directory = new File("path_to_directory");
-        try {
-            if(!file.exists()) {
-                directory.createNewFile();
-            }
-            File dataFile = new File(directory, "Your File Name");
-
-        try {
-            EditText editText = (EditText) findViewById(R.id.editText);
-            String kirPhrase = editText.getText().toString();
-
-            File gpxfile = new File(dir, sFileName);
-            FileWriter writer = new FileWriter(gpxfile);
-            writer.append(engPhrase + " : " + kirPhrase + "\n\n");
-            writer.flush();
-            writer.close();
-
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-
-
-    public void writePhraseToCorrect(View view) {
-        EditText editText = (EditText) findViewById(R.id.editText);
-        String kirPhrase = editText.getText().toString();
-    //            String filepath = getFullPath("new_phrases.txt");
-        String sFileName = "new_phrases.txt";
-
-    //            FileWriter myWriter = new FileWriter(filepath, true);
-        if (kirPhrase.length() > 0) writeFileOnInternalStorage(this, sFileName);
-    //            myWriter.close();
-    //            System.out.println("Successfully wrote to the file.");
-    }
-
-
-
-
-    public void writePhraseToIgnore(View view) {
-        EditText editText = (EditText) findViewById(R.id.editText);
-        String kirPhrase = editText.getText().toString();
-        String sFileName = "bl_phrases.txt";
-//        String filepath = getFullPath("bl_phrases.txt");
-        writeFileOnInternalStorage(this, sFileName);
-
-
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         phrases = getNewPhrases();
@@ -197,18 +148,32 @@ public class MainActivity extends AppCompatActivity {
         clickhere.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
+//                TranslationModel translationModel;
+
                 engPhrase = getPhrase(phrases);
-//             engPhrase = "hi";
-                 TextView engText = (TextView)findViewById(R.id.engText);
-                 engText.setText(engPhrase);
+//              engPhrase = "hi";
+                TextView engText = (TextView)findViewById(R.id.engText);
+                engText.setText(engPhrase);
+//                translationModel = new TranslationModel(engPhrase, )
+
+//                DBHelper dbHelper = new DBHelper(MainActivity.this);
          }
         });
 
         clickhere2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+
+                TranslationModel translationModel;
+                translationModel = new TranslationModel(engPhrase, engPhrase);
                 engPhrase = getPhrase(phrases);
                 TextView engText = (TextView)findViewById(R.id.engText);
                 engText.setText(engPhrase);
+
+                DBHelper dbHelper = new DBHelper(MainActivity.this);
+                boolean success = dbHelper.addOne(translationModel);
+
+                Toast.makeText(MainActivity.this, "sucess= " + success, Toast.LENGTH_SHORT).show();
+
             }
         });
     }
