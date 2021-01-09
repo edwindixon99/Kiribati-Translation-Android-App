@@ -2,10 +2,16 @@ package com.example.myfirstapp;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
+
+import java.util.ArrayList;
+import java.util.Deque;
+import java.util.LinkedList;
+import java.util.List;
 
 public class DBHelper extends SQLiteOpenHelper {
 
@@ -40,5 +46,29 @@ public class DBHelper extends SQLiteOpenHelper {
         long insert = db.insert(TRANSLATIONS_TABLE, null, cv);
 
         return true;
+    }
+
+    public Deque<String> getProccessedPhrases() {
+        Deque<String> returnList = new LinkedList<String>();
+
+        String queryString = "SELECT " + ENGLISH_COLUMN + " FROM " + TRANSLATIONS_TABLE;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery(queryString, null);
+
+
+        if (cursor.moveToFirst()) {
+            do {
+                String englishPhrase = cursor.getString(0);
+                returnList.add(englishPhrase);
+            } while (cursor.moveToNext());
+        } else {
+
+
+        }
+        cursor.close();
+        db.close();
+        return returnList;
     }
 }

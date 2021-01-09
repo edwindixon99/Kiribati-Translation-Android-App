@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -40,34 +41,34 @@ public class MainActivity extends AppCompatActivity {
         return whole_path;
     }
 
-    public Deque<String> getFinishedPhrases(String filename) {
-        String str;
-        String[] splitted;
-        Deque<String> deque
-                = new LinkedList<String>();
-        InputStream ins = getResources().openRawResource(
-                getResources().getIdentifier(filename,
-                        "raw", getPackageName()));
-        try {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(ins));
-            if (ins != null) {
-                while ((str = reader.readLine()) != null) {
-                    if (!str.equals("")) {
-                        splitted = str.split(":");
-
-                        deque.add(splitted[0]);
-                    }
-                }
-            }     } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                ins.close();
-            } catch (Throwable ignore) {
-            }
-        }
-        return deque;
-    }
+//    public Deque<String> getFinishedPhrases(String filename) {
+//        String str;
+//        String[] splitted;
+//        Deque<String> deque
+//                = new LinkedList<String>();
+//        InputStream ins = getResources().openRawResource(
+//                getResources().getIdentifier(filename,
+//                        "raw", getPackageName()));
+//        try {
+//            BufferedReader reader = new BufferedReader(new InputStreamReader(ins));
+//            if (ins != null) {
+//                while ((str = reader.readLine()) != null) {
+//                    if (!str.equals("")) {
+//                        splitted = str.split(":");
+//
+//                        deque.add(splitted[0]);
+//                    }
+//                }
+//            }     } catch (IOException e) {
+//            e.printStackTrace();
+//        } finally {
+//            try {
+//                ins.close();
+//            } catch (Throwable ignore) {
+//            }
+//        }
+//        return deque;
+//    }
 
 
     public Deque<String> getNewPhrases() {
@@ -75,8 +76,11 @@ public class MainActivity extends AppCompatActivity {
         String str = "";
         Deque<String> deque
                 = new LinkedList<String>();
-        Deque<String> blacklisted =  getFinishedPhrases("bl_phrases");
-        Deque<String> donelisted =  getFinishedPhrases("new_phrases");
+//        Deque<String> blacklisted =  getFinishedPhrases("bl_phrases");
+        DBHelper dbHelper = new DBHelper(MainActivity.this);
+        Deque<String> donelisted = dbHelper.getProccessedPhrases();
+//        List<String> donelisted = new;
+//        Deque<String> donelisted =  getFinishedPhrases("new_phrases");
         InputStream ins = getResources().openRawResource(
                 getResources().getIdentifier("pop_phrases",
                         "raw", getPackageName()));
@@ -99,26 +103,22 @@ public class MainActivity extends AppCompatActivity {
                 while ((str = reader.readLine()) != null) {
                     alreadyProccessed = Boolean.FALSE;
 
-                    for (String i : blacklisted) {
-                        if (i.equals(str)) {
-                            alreadyProccessed = Boolean.TRUE;
-                            break;
-                        }
-                    }
-                    if (!alreadyProccessed) {
-                        for (String i : donelisted) {
+                    for (String i : donelisted) {
+                        if (i != null) {
                             if (i.equals(str)) {
                                 alreadyProccessed = Boolean.TRUE;
                                 break;
                             }
                         }
                     }
+
                     if (!alreadyProccessed && !str.equals("")) {
                         deque.add(str);
                     }
                 }
             }     } catch (IOException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
+            Log.e("asdas", e.getMessage());
         } finally {
                 try {
                     ins.close();
@@ -149,6 +149,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 
 //                TranslationModel translationModel;
+                EditText editText = (EditText) findViewById(R.id.editText);
+                String kirPhrase = editText.getText().toString();
+
+                TranslationModel translationModel;
+                translationModel = new TranslationModel(engPhrase, kirPhrase);
+
+                DBHelper dbHelper = new DBHelper(MainActivity.this);
+                boolean success = dbHelper.addOne(translationModel);
 
                 engPhrase = getPhrase(phrases);
 //              engPhrase = "hi";
@@ -156,7 +164,9 @@ public class MainActivity extends AppCompatActivity {
                 engText.setText(engPhrase);
 //                translationModel = new TranslationModel(engPhrase, )
 
-//                DBHelper dbHelper = new DBHelper(MainActivity.this);
+
+
+                Toast.makeText(MainActivity.this, "sucess= " + success, Toast.LENGTH_SHORT).show();
          }
         });
 
