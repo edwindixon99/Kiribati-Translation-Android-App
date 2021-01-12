@@ -74,4 +74,31 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
         return returnList;
     }
+
+
+    public Deque<String> getQueriedPhrases(String query) {
+        Deque<String> returnList = new LinkedList<String>();
+
+        String queryString = "SELECT " + KIRIBATI_COLUMN + " FROM " + TABLE_NAME + " WHERE " + ENGLISH_COLUMN + " LIKE %" + query.toLowerCase() + "%";
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery(queryString, null);
+
+
+        if (cursor.moveToFirst()) {
+            do {
+                String kiriPhrase = cursor.getString(0);
+                returnList.add(kiriPhrase);
+            } while (cursor.moveToNext());
+        } else {
+
+
+        }
+        cursor.close();
+        db.close();
+        return returnList;
+    }
+
+
 }
