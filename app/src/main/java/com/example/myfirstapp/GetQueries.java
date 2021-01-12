@@ -14,6 +14,8 @@ import java.util.Deque;
 
 public class GetQueries extends AppCompatActivity {
 
+    Button clickhere;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,10 +38,19 @@ public class GetQueries extends AppCompatActivity {
                 TextView engText = (TextView) findViewById(R.id.engText);
                 String query = editText.getText().toString().toLowerCase();
 
+                StringBuilder builder = new StringBuilder();
+
+
+                engText.setText(builder.toString());
+
                 if (!query.equals("")) {
 
                     Deque<String> queriedPhrases = dbHelper.getQueriedPhrases(query);
-//                    engText.setText(queriedPhrases);
+                    for (String translation: queriedPhrases) {
+                        builder.append(translation);
+                        builder.append(", ");
+                    }
+                    engText.setText(builder.toString());
                 }
 
 
