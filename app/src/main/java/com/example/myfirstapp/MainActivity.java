@@ -1,9 +1,5 @@
 package com.example.myfirstapp;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,17 +8,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.io.BufferedReader;
-import java.io.FileWriter;   // Import the FileWriter class
-import java.io.IOException;  // Import the IOException class to handle errors
-import java.io.File;  // Import the File class
-import java.io.FileNotFoundException;  // Import this class to handle errors
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.Scanner; // Import the Scanner class to read text files
-import java.util.*;
-
-import static android.provider.AlarmClock.EXTRA_MESSAGE;
+import java.util.Deque;
+import java.util.LinkedList;
 
 public class MainActivity extends AppCompatActivity {
     public Deque<String> phrases;
@@ -30,54 +23,16 @@ public class MainActivity extends AppCompatActivity {
     public final static String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
     Button clickhere;
     Button clickhere2;
+    Button clickhere3;
     TextView engText;
 
-
-    public String getFullPath(String filename) {
-        String path = System.getProperty("user.dir");
-        String whole_path = path + "/src/file/" + filename;
-//        System.out.println(whole_path);
-//        System.out.println("/home/cosc/student/ejd83/IdeaProjects/Kiri_subtitles/src/file" + "/pop_phrases.txt");
-        return whole_path;
-    }
-
-//    public Deque<String> getFinishedPhrases(String filename) {
-//        String str;
-//        String[] splitted;
-//        Deque<String> deque
-//                = new LinkedList<String>();
-//        InputStream ins = getResources().openRawResource(
-//                getResources().getIdentifier(filename,
-//                        "raw", getPackageName()));
-//        try {
-//            BufferedReader reader = new BufferedReader(new InputStreamReader(ins));
-//            if (ins != null) {
-//                while ((str = reader.readLine()) != null) {
-//                    if (!str.equals("")) {
-//                        splitted = str.split(":");
-//
-//                        deque.add(splitted[0]);
-//                    }
-//                }
-//            }     } catch (IOException e) {
-//            e.printStackTrace();
-//        } finally {
-//            try {
-//                ins.close();
-//            } catch (Throwable ignore) {
-//            }
-//        }
-//        return deque;
-//    }
-
-
-    public Deque<String> getNewPhrases() {
+    public Deque<String> getNewPhrases(DBHelper dbHelper) {
         Boolean alreadyProccessed;
         String str = "";
         Deque<String> deque
                 = new LinkedList<String>();
 //        Deque<String> blacklisted =  getFinishedPhrases("bl_phrases");
-        DBHelper dbHelper = new DBHelper(MainActivity.this);
+//        DBHelper dbHelper = new DBHelper(MainActivity.this);
         Deque<String> donelisted = dbHelper.getProccessedPhrases();
 //        List<String> donelisted = new;
 //        Deque<String> donelisted =  getFinishedPhrases("new_phrases");
@@ -120,21 +75,24 @@ public class MainActivity extends AppCompatActivity {
 //            e.printStackTrace();
             Log.e("asdas", e.getMessage());
         } finally {
-                try {
-                    ins.close();
-                } catch (Throwable ignore) {
-                }
+            try {
+                ins.close();
+            } catch (Throwable ignore) {
             }
-            return deque;
         }
-
-    public String getPhrase(Deque<String> phrases) {
-        return phrases.pop();
+        return deque;
     }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        phrases = getNewPhrases();
+        final Phrases ph = new Phrases();
+        DBHelper dbHelper = new DBHelper(MainActivity.this, "TRANSLATIONS");
+        InputStream ins = getResources().openRawResource(
+                getResources().getIdentifier("pop_phrases",
+                        "raw", getPackageName()));
+
+        phrases = ph.getNewPhrases(dbHelper, ins);
 //        engPhrase = getPhrase(phrases);
 //        engPhrase = "hi";
         TextView engText = (TextView)findViewById(R.id.engText);
@@ -144,21 +102,25 @@ public class MainActivity extends AppCompatActivity {
 
         clickhere = (Button) findViewById(R.id.button);
         clickhere2 = (Button) findViewById(R.id.button2);
+        clickhere3 = (Button) findViewById(R.id.button3);
 
         clickhere.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
 //                TranslationModel translationModel;
                 EditText editText = (EditText) findViewById(R.id.editText);
-                String kirPhrase = editText.getText().toString();
+                String kirPhrase = editText.getText().toString().toLowerCase();
 
                 TranslationModel translationModel;
                 translationModel = new TranslationModel(engPhrase, kirPhrase);
 
-                DBHelper dbHelper = new DBHelper(MainActivity.this);
+                DBHelper dbHelper = new DBHelper(MainActivity.this, "TRANSLATIONS");
                 boolean success = dbHelper.addOne(translationModel);
 
-                engPhrase = getPhrase(phrases);
+                Phrases ph = new Phrases();
+
+                engPhrase = ph.getPhrase(phrases);
+
 //              engPhrase = "hi";
                 TextView engText = (TextView)findViewById(R.id.engText);
                 engText.setText(engPhrase);
@@ -175,17 +137,58 @@ public class MainActivity extends AppCompatActivity {
 
                 TranslationModel translationModel;
                 translationModel = new TranslationModel(engPhrase, engPhrase);
-                engPhrase = getPhrase(phrases);
+                engPhrase = ph.getPhrase(phrases);
                 TextView engText = (TextView)findViewById(R.id.engText);
                 engText.setText(engPhrase);
 
-                DBHelper dbHelper = new DBHelper(MainActivity.this);
+                DBHelper dbHelper = new DBHelper(MainActivity.this, "TRANSLATIONS");
                 boolean success = dbHelper.addOne(translationModel);
 
                 Toast.makeText(MainActivity.this, "sucess= " + success, Toast.LENGTH_SHORT).show();
 
             }
         });
+
+//        clickhere3.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View v) {
+//
+////                TranslationModel translationModel;
+////                translationModel = new TranslationModel(engPhrase, engPhrase);
+////                engPhrase = ph.getPhrase(phrases);
+////                TextView engText = (TextView)findViewById(R.id.engText);
+////                engText.setText(engPhrase);
+//
+//                DBHelper dbHelper = new DBHelper(MainActivity.this, "DICTIONARY");
+//                InputStream dictins = getResources().openRawResource(
+//                        getResources().getIdentifier("dictionary",
+//                                "raw", getPackageName()));
+//
+//                ph.fillDictionary(dbHelper, dictins);
+//
+////                boolean success = dbHelper.addOne(translationModel);
+//
+////                Toast.makeText(MainActivity.this, "sucess= " + success, Toast.LENGTH_SHORT).show();
+//
+//            }
+//        });
+
+        clickhere3.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+//                TranslationModel translationModel;
+//                translationModel = new TranslationModel(engPhrase, engPhrase);
+                engPhrase = ph.getPhrase(phrases);
+                TextView engText = (TextView)findViewById(R.id.engText);
+                engText.setText(engPhrase);
+
+
+//                boolean success = dbHelper.addOne(translationModel);
+
+//                Toast.makeText(MainActivity.this, "sucess= " + success, Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
     }
 
     /** Called when the user taps the Send button */

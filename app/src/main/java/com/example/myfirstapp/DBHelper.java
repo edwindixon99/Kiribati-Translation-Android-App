@@ -19,15 +19,18 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String ENGLISH_COLUMN = "ENGLISH";
     public static final String KIRIBATI_COLUMN = "KIRIBATI";
     public static final String ID_COLUMN = "ID";
+    public static String name;
+    public static String TABLE_NAME = name + "_TABLE";
 
-    public DBHelper(@Nullable Context context) {
-        super(context, "Translations", null, 1);
+    public DBHelper(@Nullable Context context, String name) {
+        super(context, name, null, 1);
+        this.name = name;
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-        String createTableStatement = "CREATE TABLE " + TRANSLATIONS_TABLE + " (" + ID_COLUMN + " INTEGER PRIMARY KEY AUTOINCREMENT, " + ENGLISH_COLUMN + " TEXT, " + KIRIBATI_COLUMN + " TEXT)";
+        String createTableStatement = "CREATE TABLE " + TABLE_NAME + " (" + ID_COLUMN + " INTEGER PRIMARY KEY AUTOINCREMENT, " + ENGLISH_COLUMN + " TEXT, " + KIRIBATI_COLUMN + " TEXT)";
         db.execSQL(createTableStatement);
     }
 
@@ -43,7 +46,7 @@ public class DBHelper extends SQLiteOpenHelper {
         cv.put(ENGLISH_COLUMN, translationModel.getEnglishPhrase());
         cv.put(KIRIBATI_COLUMN, translationModel.getKiribatiPhrase());
 
-        long insert = db.insert(TRANSLATIONS_TABLE, null, cv);
+        long insert = db.insert(TABLE_NAME, null, cv);
 
         return true;
     }
@@ -51,7 +54,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public Deque<String> getProccessedPhrases() {
         Deque<String> returnList = new LinkedList<String>();
 
-        String queryString = "SELECT " + ENGLISH_COLUMN + " FROM " + TRANSLATIONS_TABLE;
+        String queryString = "SELECT " + ENGLISH_COLUMN + " FROM " + TABLE_NAME;
 
         SQLiteDatabase db = this.getReadableDatabase();
 

@@ -3,6 +3,8 @@
     <string name="edit_message">Enter a message</string>
     <string name="button_send">Enter Kiribati Translation</string>
     <string name="correct">Correct</string>
-    <string name="ignore">Ignore</string>
+    <string name="no_translation">No Translation</string>
+    <string name="skip_4_now">Skip Word/Do Later</string>
+    <string name="make_dict">Make Dictionary DB</string>
     <string name="english_phrase">Test</string>
 </resources>
