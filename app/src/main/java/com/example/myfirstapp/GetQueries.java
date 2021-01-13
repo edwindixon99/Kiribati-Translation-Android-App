@@ -7,9 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.io.InputStream;
 import java.util.Deque;
 
 public class GetQueries extends AppCompatActivity {
@@ -34,7 +32,7 @@ public class GetQueries extends AppCompatActivity {
             public void onClick(View v) {
 
 //                TranslationModel translationModel;
-                EditText editText = (EditText) findViewById(R.id.editText);
+                EditText editText = (EditText) findViewById(R.id.query);
                 TextView engText = (TextView) findViewById(R.id.engText);
                 String query = editText.getText().toString().toLowerCase();
 

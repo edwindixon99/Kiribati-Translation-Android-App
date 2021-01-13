@@ -6,82 +6,31 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="252dp"
-        android:layout_height="47dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="368dp"
-        android:layout_marginEnd="140dp"
-        android:layout_marginRight="140dp"
-        android:onClick="writePhraseToCorrect"
-        android:text="@string/skip_4_now"
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
+        android.id="@+id/bottomNavigationView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/editTextTextPersonName"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="121dp"
-        android:layout_height="47dp"
-        android:layout_marginTop="300dp"
-        android:onClick="writePhraseToIgnore"
-        android:text="@string/no_translation"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toStartOf="@+id/button"
-        app:layout_constraintHorizontal_bias="0.727"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:menu="@menu/bottom_menu" />
 
-    <EditText
-        android:id="@+id/editText"
-        android:layout_width="384dp"
-        android:layout_height="89dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="196dp"
-        android:ems="10"
-        android:hint="@string/button_send"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toStartOf="@+id/button"
+    <fragment
+        android:id="@+id/fragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="408dp"
+        android:layout_height="674dp"
+        app:defaultNavHost="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:autofillHints="" />
+        app:layout_constraintVertical_bias="0.0"
+        app:navGraph="@navigation/my_nav"
+        tools:layout="@layout/activity_get_queries" />
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="252dp"
-        android:layout_height="47dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="300dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:onClick="writePhraseToCorrect"
-        android:text="@string/correct"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/editTextTextPersonName"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/engText"
-        android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
-        android:text="@string/english_phrase"
-        android:textSize="36sp"
-        tools:layout_editor_absoluteX="17dp"
-        tools:layout_editor_absoluteY="20dp"
-        android:inputType="textMultiLine"
-        android:scrollHorizontally="false"/>
-
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
