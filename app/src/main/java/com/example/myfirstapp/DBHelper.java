@@ -78,10 +78,43 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
 
-    public Deque<String> getQueriedPhrases(String query) {
+    public Deque<String> getQueriedEngPhrases(String query) {
         Deque<String> returnList = new LinkedList<String>();
 
-        String queryString = "SELECT " + KIRIBATI_COLUMN + " FROM " + "null_TABLE" + " WHERE " + ENGLISH_COLUMN + " LIKE '%" + query.toLowerCase() + "%'";
+        String queryString = "SELECT " + KIRIBATI_COLUMN + "," + ENGLISH_COLUMN + " FROM " + "null_TABLE" + " WHERE " + ENGLISH_COLUMN + " LIKE '% " + query.toLowerCase() + " %'";
+        queryString += " OR " + ENGLISH_COLUMN + " LIKE '" + query.toLowerCase() + "'";
+        queryString += " OR " + ENGLISH_COLUMN + " LIKE '" + query.toLowerCase() + " %'";
+        queryString += " OR " + ENGLISH_COLUMN + " LIKE '% " + query.toLowerCase() + "'";
+//        String queryString = "SELECT ?, ? FROM null_TABLE WHERE ? LIKE '%" + query.toLowerCase() + "%'";
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+//        Cursor cursor = db.rawQuery(queryString, new String[] {KIRIBATI_COLUMN, ENGLISH_COLUMN, ENGLISH_COLUMN});
+        Cursor cursor = db.rawQuery(queryString, null);
+
+
+        if (cursor.moveToFirst()) {
+            do {
+                String kiriPhrase = cursor.getString(1);
+                kiriPhrase += " : " + cursor.getString(0);
+                returnList.add(kiriPhrase);
+            } while (cursor.moveToNext());
+        } else {
+
+
+        }
+        cursor.close();
+        db.close();
+        return returnList;
+    }
+
+    public Deque<String> getQueriedKirPhrases(String query) {
+        Deque<String> returnList = new LinkedList<String>();
+
+        String queryString = "SELECT " + KIRIBATI_COLUMN + "," + ENGLISH_COLUMN + " FROM " + "null_TABLE" + " WHERE " + KIRIBATI_COLUMN + " LIKE '% " + query.toLowerCase() + " %'";
+        queryString += " OR " + KIRIBATI_COLUMN + " LIKE '" + query.toLowerCase() + "'";
+        queryString += " OR " + KIRIBATI_COLUMN + " LIKE '" + query.toLowerCase() + " %'";
+        queryString += " OR " + KIRIBATI_COLUMN + " LIKE '% " + query.toLowerCase() + "'";
 //        String queryString = "SELECT ?, ? FROM null_TABLE WHERE ? LIKE '%" + query.toLowerCase() + "%'";
 
         SQLiteDatabase db = this.getReadableDatabase();
@@ -93,7 +126,7 @@ public class DBHelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 String kiriPhrase = cursor.getString(0);
-//                kiriPhrase += " : " + cursor.getString(1);
+                kiriPhrase += " : " + cursor.getString(1);
                 returnList.add(kiriPhrase);
             } while (cursor.moveToNext());
         } else {

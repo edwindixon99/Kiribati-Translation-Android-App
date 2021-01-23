@@ -115,10 +115,11 @@ public class GetQueries2 extends Fragment {
 
                 if (!queryString.equals("")) {
 
-                    Deque<String> queriedPhrases = dbHelper.getQueriedPhrases(queryString);
+                    Deque<String> queriedPhrases = dbHelper.getQueriedKirPhrases(queryString);
                     for (String translation : queriedPhrases) {
                         builder.append(translation);
-                        builder.append(", ");
+//                        builder.append(",");
+                        builder.append("\n");
                     }
                     searchResults.setText(builder.toString());
                 }

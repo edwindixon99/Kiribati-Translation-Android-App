@@ -41,15 +41,15 @@ public class GetQueries extends AppCompatActivity {
 
                 engText.setText(builder.toString());
 
-                if (!query.equals("")) {
+//                if (!query.equals("")) {
 
-                    Deque<String> queriedPhrases = dbHelper.getQueriedPhrases(query);
-                    for (String translation: queriedPhrases) {
-                        builder.append(translation);
-                        builder.append(", ");
-                    }
-                    engText.setText(builder.toString());
-                }
+//                    Deque<String> queriedPhrases = dbHelper.getQueriedPhrases(query);
+//                    for (String translation: queriedPhrases) {
+//                        builder.append(translation);
+//                        builder.append(", ");
+//                    }
+//                    engText.setText(builder.toString());
+//                }
 
 
             }
