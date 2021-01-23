@@ -31,6 +31,9 @@ public class GetQueries2 extends Fragment {
     private String mParam1;
     private String mParam2;
     private Button clickhere;
+    private EditText editText;
+    private TextView searchResults;
+    private String queryString;
 
     public GetQueries2() {
         // Required empty public constructor
@@ -81,35 +84,79 @@ public class GetQueries2 extends Fragment {
         final TextView searchResults = (TextView) fragmentView.findViewById(R.id.results);
 ////        clickhere2 = (Button) findViewById(R.id.button2);
 ////        clickhere3 = (Button) findViewById(R.id.button3);
+        queryString = editText.getText().toString();
+
+        StringBuilder builder = new StringBuilder();
 //
-        clickhere.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-
-                TranslationModel translationModel;
-
-                String query = editText.getText().toString().toLowerCase();
-
-                StringBuilder builder = new StringBuilder();
-
+//
 //                searchResults.setText(builder.toString());
-                searchResults.setText(query);
+//        queryString = "hello";
 
-                Toast.makeText(, "button works", Toast.LENGTH_SHORT);
-
-//                if (!query.equals("")) {
+//        if (!queryString.equals("")) {
 //
-//                    Deque<String> queriedPhrases = dbHelper.getQueriedPhrases(query);
-//                    for (String translation : queriedPhrases) {
-//                        builder.append(translation);
-//                        builder.append(", ");
-//                    }
-//                    searchResults.setText(builder.toString());
-//                }
+//            Deque<String> queriedPhrases = dbHelper.getQueriedPhrases(queryString);
+//            for (String translation : queriedPhrases) {
+//                builder.append(translation);
+//                builder.append(", \n");
+//            }
+//            searchResults.setText(builder.toString());
 
+
+        clickhere.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                place your action here
+//                searchResults.setText("hello");
+                StringBuilder builder = new StringBuilder();
+//
+//
+//                searchResults.setText(builder.toString());
+                queryString = editText.getText().toString().toLowerCase();
+
+                if (!queryString.equals("")) {
+
+                    Deque<String> queriedPhrases = dbHelper.getQueriedPhrases(queryString);
+                    for (String translation : queriedPhrases) {
+                        builder.append(translation);
+                        builder.append(", ");
+                    }
+                    searchResults.setText(builder.toString());
+                }
             }
         });
+//        new View.OnClickListener() {
+//            public void onClick(View v) {
+//
+//                TranslationModel translationModel;
+//
+//                String query = editText.getText().toString().toLowerCase();
+//
+//                StringBuilder builder = new StringBuilder();
+//
+////                searchResults.setText(builder.toString());
+//                searchResults.setText(query);
+//
+////                Toast.makeText(, "button works", Toast.LENGTH_SHORT);
+//
+////                if (!query.equals("")) {
+////
+////                    Deque<String> queriedPhrases = dbHelper.getQueriedPhrases(query);
+////                    for (String translation : queriedPhrases) {
+////                        builder.append(translation);
+////                        builder.append(", ");
+////                    }
+////                    searchResults.setText(builder.toString());
+////                }
+//
+//            }
+//        });
 
 
-        return inflater.inflate(R.layout.fragment_get_queries2, container, false);
+        return fragmentView;
     }
+
+//    @Override
+//    public void onClick(View v) {
+//        searchResults.setText(queryString);
+//    }
 }

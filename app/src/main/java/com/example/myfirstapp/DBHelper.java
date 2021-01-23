@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.speech.tts.TextToSpeech;
 
 import androidx.annotation.Nullable;
 
@@ -25,6 +26,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public DBHelper(@Nullable Context context, String name) {
         super(context, name, null, 1);
         this.name = name;
+        this.TABLE_NAME = TABLE_NAME = name + "_TABLE";
     }
 
     @Override
@@ -79,16 +81,19 @@ public class DBHelper extends SQLiteOpenHelper {
     public Deque<String> getQueriedPhrases(String query) {
         Deque<String> returnList = new LinkedList<String>();
 
-        String queryString = "SELECT " + KIRIBATI_COLUMN + " FROM " + TABLE_NAME + " WHERE " + ENGLISH_COLUMN + " LIKE %" + query.toLowerCase() + "%";
+        String queryString = "SELECT " + KIRIBATI_COLUMN + " FROM " + "null_TABLE" + " WHERE " + ENGLISH_COLUMN + " LIKE '%" + query.toLowerCase() + "%'";
+//        String queryString = "SELECT ?, ? FROM null_TABLE WHERE ? LIKE '%" + query.toLowerCase() + "%'";
 
         SQLiteDatabase db = this.getReadableDatabase();
 
+//        Cursor cursor = db.rawQuery(queryString, new String[] {KIRIBATI_COLUMN, ENGLISH_COLUMN, ENGLISH_COLUMN});
         Cursor cursor = db.rawQuery(queryString, null);
 
 
         if (cursor.moveToFirst()) {
             do {
                 String kiriPhrase = cursor.getString(0);
+//                kiriPhrase += " : " + cursor.getString(1);
                 returnList.add(kiriPhrase);
             } while (cursor.moveToNext());
         } else {
