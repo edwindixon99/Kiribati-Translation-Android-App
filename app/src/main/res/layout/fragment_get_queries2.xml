@@ -19,7 +19,7 @@
             android:layout_marginTop="24dp"
             android:layout_marginEnd="28dp"
             android:layout_marginRight="28dp"
-            android:text="@string/correct"
+            android:text="@string/search"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -53,7 +53,7 @@
             android:layout_marginTop="16dp"
             android:autofillHints=""
             android:ems="10"
-            android:hint="@string/button_send"
+            android:hint="@string/enter_eng_word"
             android:inputType="textPersonName"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

@@ -2,11 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/blank"
-        android:icon="@drawable/ic_baseline_add_24"
-        android:title="AddPopPhrases" />
-    <item
-        android:id="@+id/getQueries"
+        android:id="@+id/googleTranslateKtoE"
         android:icon="@drawable/ic_baseline_g_translate_24"
-        android:title="GTranslate" />
+        android:title="ENG -> KIR" />
+    <item
+        android:id="@+id/getQueries2"
+        android:icon="@drawable/ic_baseline_g_translate_24"
+        android:title="KIR -> ENG" />
 </menu>
