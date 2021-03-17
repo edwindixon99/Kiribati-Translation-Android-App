@@ -138,5 +138,31 @@ public class DBHelper extends SQLiteOpenHelper {
         return returnList;
     }
 
+    public String getUnvalidatedString() {
+        String kiriPhrase = "ERROR";
+        Deque<String> returnList = new LinkedList<String>();
+        int num = 1;
+        String queryString = "SELECT top " + Integer.toString(num) + " " + KIRIBATI_COLUMN + " FROM " + "valid_kiribati_words" + " WHERE checked = 0";
+//        String queryString = "SELECT ?, ? FROM null_TABLE WHERE ? LIKE '%" + query.toLowerCase() + "%'";
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+//        Cursor cursor = db.rawQuery(queryString, new String[] {KIRIBATI_COLUMN, ENGLISH_COLUMN, ENGLISH_COLUMN});
+        Cursor cursor = db.rawQuery(queryString, null);
+
+
+        if (cursor.moveToFirst()) {
+            do {
+                kiriPhrase = cursor.getString(0);
+
+            } while (cursor.moveToNext());
+        } else {
+
+
+        }
+        cursor.close();
+        db.close();
+        return kiriPhrase;
+    }
 
 }

@@ -2,6 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/popPhrases2"
+        android:icon="@drawable/ic_baseline_add_24"
+        android:title="Add Pop Phrases" />
+    <item
         android:id="@+id/googleTranslateKtoE"
         android:icon="@drawable/ic_baseline_g_translate_24"
         android:title="ENG -> KIR" />
@@ -9,4 +13,8 @@
         android:id="@+id/getQueries2"
         android:icon="@drawable/ic_baseline_g_translate_24"
         android:title="KIR -> ENG" />
+    <item
+        android:id="@+id/kphrasevalidation"
+        android:icon="@drawable/ic_baseline_g_translate_24"
+        android:title="valid" />
 </menu>
