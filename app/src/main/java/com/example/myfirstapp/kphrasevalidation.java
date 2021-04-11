@@ -63,20 +63,20 @@ public class kphrasevalidation extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View fragmentView =  inflater.inflate(R.layout.fragment_get_queries2, container , false);
+        View fragmentView =  inflater.inflate(R.layout.fragment_kphrasevalidation, container , false);
         // Inflate the layout for this fragment
 
 //        final Phrases ph = new Phrases();
-//        final DBHelper dbHelper = new DBHelper(getActivity(), "DICTIONARY");
-//
+        final DBHelper dbHelper = new DBHelper(getActivity(), "DICTIONARY");
+
 //        String newString = dbHelper.getUnvalidatedString();
-////        TextView engText = (TextView) getView().findViewById(R.id.engText);
-////        engText.setText(engPhrase);
-////
-//        clickkeep = (Button) fragmentView.findViewById(R.id.keep);
-//        clickdiscard = (Button) fragmentView.findViewById(R.id.discard);
-//        final TextView searchResults = (TextView) fragmentView.findViewById(R.id.results);
+//        TextView engText = (TextView) getView().findViewById(R.id.engText);
+//        engText.setText(engPhrase);
 //
+        clickkeep = (Button) fragmentView.findViewById(R.id.keep);
+        clickdiscard = (Button) fragmentView.findViewById(R.id.discard);
+        final TextView searchResults = (TextView) fragmentView.findViewById(R.id.results);
+
 //        searchResults.setText(newString);
 
 
