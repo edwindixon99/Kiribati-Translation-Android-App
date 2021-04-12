@@ -84,20 +84,21 @@ public class PopPhrases2 extends Fragment {
         // Inflate the layout for this fragment
 
         final Phrases ph = new Phrases();
-        DBHelper dbHelper = new DBHelper(getActivity(), "TRANSLATIONS");
+        DBHelper dbHelper = new DBHelper(getActivity(), "DICTIONARY");
         InputStream ins = getResources().openRawResource(
                 getResources().getIdentifier("pop_phrases",
                         "raw", getActivity().getPackageName()));
-
+////
+//        ph.fillDictionary(dbHelper, ins);
         phrases = ph.getNewPhrases(dbHelper, ins);
 //        engPhrase = getPhrase(phrases);
-//        engPhrase = "hi";
+        engPhrase = "hi";
         TextView engText = (TextView) getView().findViewById(R.id.engText);
-//        engText.setText(engPhrase);
+        engText.setText(engPhrase);
 
-        BottomNavigationView bottomNavigationView = getView().findViewById(R.id.bottomNavigationView);
-        NavController navController = Navigation.findNavController(getActivity(), R.id.fragment);
-        NavigationUI.setupWithNavController(bottomNavigationView, navController);
+//        BottomNavigationView bottomNavigationView = getView().findViewById(R.id.bottomNavigationView);
+//        NavController navController = Navigation.findNavController(getActivity(), R.id.fragment);
+//        NavigationUI.setupWithNavController(bottomNavigationView, navController);
 
         clickhere = (Button) getView().findViewById(R.id.button);
         clickhere2 = (Button) getView().findViewById(R.id.button2);
@@ -157,12 +158,12 @@ public class PopPhrases2 extends Fragment {
 ////                TextView engText = (TextView)findViewById(R.id.engText);
 ////                engText.setText(engPhrase);
 //
-//                DBHelper dbHelper = new DBHelper(MainActivity.this, "DICTIONARY");
-//                InputStream dictins = getResources().openRawResource(
-//                        getResources().getIdentifier("dictionary",
-//                                "raw", getPackageName()));
+////                DBHelper dbHelper = new DBHelper(getActivity(), "DICTIONARY");
+////                InputStream dictins = getResources().openRawResource(
+////                        getResources().getIdentifier("finaldict",
+////                                "raw", getActivity().getPackageName()));
 //
-//                ph.fillDictionary(dbHelper, dictins);
+////                ph.fillDictionary(dbHelper, dictins);
 //
 ////                boolean success = dbHelper.addOne(translationModel);
 //

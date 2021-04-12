@@ -21,12 +21,12 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String KIRIBATI_COLUMN = "KIRIBATI";
     public static final String ID_COLUMN = "ID";
     public static String name;
-    public static String TABLE_NAME = name + "_TABLE";
+    public static String TABLE_NAME = name + "_NEW_TABLE";
 
     public DBHelper(@Nullable Context context, String name) {
         super(context, name, null, 1);
         this.name = name;
-        this.TABLE_NAME = TABLE_NAME = name + "_TABLE";
+        this.TABLE_NAME  = name + "_TABLE";
     }
 
     @Override
