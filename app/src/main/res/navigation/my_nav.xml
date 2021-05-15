@@ -14,14 +14,4 @@
         android:name="com.example.myfirstapp.GoogleTranslateKtoE"
         android:label="fragment_google_translate_kto_e"
         tools:layout="@layout/fragment_google_translate_kto_e" />
-    <fragment
-        android:id="@+id/popPhrases2"
-        android:name="com.example.myfirstapp.PopPhrases2"
-        android:label="fragment_pop_phrases2"
-        tools:layout="@layout/fragment_pop_phrases2" />
-    <fragment
-        android:id="@+id/kphrasevalidation"
-        android:name="com.example.myfirstapp.kphrasevalidation"
-        android:label="fragment_kphrasevalidation"
-        tools:layout="@layout/fragment_kphrasevalidation" />
 </navigation>
