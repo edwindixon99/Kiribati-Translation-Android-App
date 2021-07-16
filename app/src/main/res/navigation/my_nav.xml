@@ -6,12 +6,12 @@
     app:startDestination="@id/googleTranslateKtoE">
     <fragment
         android:id="@+id/getQueries2"
-        android:name="com.example.myfirstapp.GetQueries2"
+        android:name="com.ejd.kiribatitranslate.GetQueries2"
         android:label="fragment_get_queries2"
         tools:layout="@layout/fragment_get_queries2" />
     <fragment
         android:id="@+id/googleTranslateKtoE"
-        android:name="com.example.myfirstapp.GoogleTranslateKtoE"
+        android:name="com.ejd.kiribatitranslate.GoogleTranslateKtoE"
         android:label="fragment_google_translate_kto_e"
         tools:layout="@layout/fragment_google_translate_kto_e" />
 </navigation>

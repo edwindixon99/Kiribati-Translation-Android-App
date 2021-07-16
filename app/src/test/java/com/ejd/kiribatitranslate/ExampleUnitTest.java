@@ -1,4 +1,4 @@
-package com.example.myfirstapp;
+package com.ejd.kiribatitranslate;
 
 import org.junit.Test;
 
