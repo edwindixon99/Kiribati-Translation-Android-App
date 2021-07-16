@@ -70,50 +70,29 @@ public class GetQueries2 extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View fragmentView =  inflater.inflate(R.layout.fragment_get_queries2, container , false);
+        View fragmentView =  inflater.inflate(R.layout.fragment_google_translate_kto_e, container , false);
         // Inflate the layout for this fragment
 
-        final Phrases ph = new Phrases();
         final DBHelper dbHelper = new DBHelper(getActivity(), "DICTIONARY");
-//
-//        TextView engText = (TextView) getView().findViewById(R.id.engText);
-//        engText.setText(engPhrase);
-//
+
         clickhere = (Button) fragmentView.findViewById(R.id.search);
         final EditText editText = (EditText) fragmentView.findViewById(R.id.query);
         final TextView searchResults = (TextView) fragmentView.findViewById(R.id.results);
-////        clickhere2 = (Button) findViewById(R.id.button2);
-////        clickhere3 = (Button) findViewById(R.id.button3);
+
         queryString = editText.getText().toString();
 
         StringBuilder builder = new StringBuilder();
-//
-//
-//                searchResults.setText(builder.toString());
-//        queryString = "hello";
-
-//        if (!queryString.equals("")) {
-//
-//            Deque<String> queriedPhrases = dbHelper.getQueriedPhrases(queryString);
-//            for (String translation : queriedPhrases) {
-//                builder.append(translation);
-//                builder.append(", \n");
-//            }
-//            searchResults.setText(builder.toString());
 
 
         clickhere.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                place your action here
-//                searchResults.setText("hello");
+
                 StringBuilder builder = new StringBuilder();
-//
-//
-//                searchResults.setText(builder.toString());
+
                 queryString = editText.getText().toString().toLowerCase();
 
-                if (!queryString.equals("")) {
+                if (!queryString.equals("") && !queryString.contains("'")) {
 
                     Deque<String> queriedPhrases = dbHelper.getQueriedKirPhrases(queryString);
                     for (String translation : queriedPhrases) {
@@ -125,39 +104,7 @@ public class GetQueries2 extends Fragment {
                 }
             }
         });
-//        new View.OnClickListener() {
-//            public void onClick(View v) {
-//
-//                TranslationModel translationModel;
-//
-//                String query = editText.getText().toString().toLowerCase();
-//
-//                StringBuilder builder = new StringBuilder();
-//
-////                searchResults.setText(builder.toString());
-//                searchResults.setText(query);
-//
-////                Toast.makeText(, "button works", Toast.LENGTH_SHORT);
-//
-////                if (!query.equals("")) {
-////
-////                    Deque<String> queriedPhrases = dbHelper.getQueriedPhrases(query);
-////                    for (String translation : queriedPhrases) {
-////                        builder.append(translation);
-////                        builder.append(", ");
-////                    }
-////                    searchResults.setText(builder.toString());
-////                }
-//
-//            }
-//        });
-
-
         return fragmentView;
     }
 
-//    @Override
-//    public void onClick(View v) {
-//        searchResults.setText(queryString);
-//    }
 }

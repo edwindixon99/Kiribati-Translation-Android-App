@@ -41,43 +41,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
     }
 
-    public boolean addOne(TranslationModel translationModel)
-    {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues cv = new ContentValues();
-        cv.put(ENGLISH_COLUMN, translationModel.getEnglishPhrase());
-        cv.put(KIRIBATI_COLUMN, translationModel.getKiribatiPhrase());
-
-        long insert = db.insert(TABLE_NAME, null, cv);
-
-        return true;
-    }
-
-    public Deque<String> getProccessedPhrases() {
-        Deque<String> returnList = new LinkedList<String>();
-
-        String queryString = "SELECT " + ENGLISH_COLUMN + " FROM " + TABLE_NAME;
-
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        Cursor cursor = db.rawQuery(queryString, null);
-
-
-        if (cursor.moveToFirst()) {
-            do {
-                String englishPhrase = cursor.getString(0);
-                returnList.add(englishPhrase);
-            } while (cursor.moveToNext());
-        } else {
-
-
-        }
-        cursor.close();
-        db.close();
-        return returnList;
-    }
-
-
     public Deque<String> getQueriedEngPhrases(String query) {
         Deque<String> returnList = new LinkedList<String>();
 
@@ -89,7 +52,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
         SQLiteDatabase db = this.getReadableDatabase();
 
-//        Cursor cursor = db.rawQuery(queryString, new String[] {KIRIBATI_COLUMN, ENGLISH_COLUMN, ENGLISH_COLUMN});
         Cursor cursor = db.rawQuery(queryString, null);
 
 
@@ -120,6 +82,7 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
 //        Cursor cursor = db.rawQuery(queryString, new String[] {KIRIBATI_COLUMN, ENGLISH_COLUMN, ENGLISH_COLUMN});
+
         Cursor cursor = db.rawQuery(queryString, null);
 
 
@@ -136,33 +99,6 @@ public class DBHelper extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return returnList;
-    }
-
-    public String getUnvalidatedString() {
-        String kiriPhrase = "ERROR";
-        Deque<String> returnList = new LinkedList<String>();
-        int num = 1;
-        String queryString = "SELECT top " + Integer.toString(num) + " " + KIRIBATI_COLUMN + " FROM " + "valid_kiribati_words" + " WHERE checked = 0";
-//        String queryString = "SELECT ?, ? FROM null_TABLE WHERE ? LIKE '%" + query.toLowerCase() + "%'";
-
-        SQLiteDatabase db = this.getReadableDatabase();
-
-//        Cursor cursor = db.rawQuery(queryString, new String[] {KIRIBATI_COLUMN, ENGLISH_COLUMN, ENGLISH_COLUMN});
-        Cursor cursor = db.rawQuery(queryString, null);
-
-
-        if (cursor.moveToFirst()) {
-            do {
-                kiriPhrase = cursor.getString(0);
-
-            } while (cursor.moveToNext());
-        } else {
-
-
-        }
-        cursor.close();
-        db.close();
-        return kiriPhrase;
     }
 
 }
