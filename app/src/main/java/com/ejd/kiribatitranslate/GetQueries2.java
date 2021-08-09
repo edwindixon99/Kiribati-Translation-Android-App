@@ -1,5 +1,7 @@
 package com.ejd.kiribatitranslate;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,11 +9,15 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import java.util.Deque;
+
+import static com.ejd.kiribatitranslate.Utility.hideKeyboardFrom;
+import static com.ejd.kiribatitranslate.Utility.updateTextview;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -56,6 +62,8 @@ public class GetQueries2 extends Fragment {
         return fragment;
     }
 
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,7 +88,7 @@ public class GetQueries2 extends Fragment {
 
         queryString = editText.getText().toString();
 
-        StringBuilder builder = new StringBuilder();
+//        StringBuilder builder = new StringBuilder();
 
 
         clickhere.setOnClickListener(new View.OnClickListener() {
@@ -93,14 +101,10 @@ public class GetQueries2 extends Fragment {
 
                 if (!queryString.equals("") && !queryString.contains("'")) {
 
-                    Deque<String> queriedPhrases = dbHelper.getQueriedKirPhrases(queryString);
-                    for (String translation : queriedPhrases) {
-                        builder.append(translation);
-//                        builder.append(",");
-                        builder.append("\n");
-                    }
-                    searchResults.setText(builder.toString());
+                    updateTextview(queryString, searchResults, dbHelper, false);
+
                 }
+                hideKeyboardFrom(getContext(), view);
             }
         });
         return fragmentView;

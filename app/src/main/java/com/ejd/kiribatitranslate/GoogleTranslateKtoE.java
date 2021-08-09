@@ -13,6 +13,10 @@ import android.widget.TextView;
 
 import java.util.Deque;
 
+import static com.ejd.kiribatitranslate.Utility.hideKeyboardFrom;
+import static com.ejd.kiribatitranslate.Utility.updateTextview;
+
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link GoogleTranslateKtoE#newInstance} factory method to
@@ -90,14 +94,9 @@ public class GoogleTranslateKtoE extends Fragment {
 
                 if (!queryString.equals("") && !queryString.contains("'")) {
 
-                    Deque<String> queriedPhrases = dbHelper.getQueriedEngPhrases(queryString);
-                    for (String translation : queriedPhrases) {
-                        builder.append(translation);
-
-                        builder.append("\n");
-                    }
-                    searchResults.setText(builder.toString());
+                    updateTextview(queryString, searchResults, dbHelper, true);
                 }
+                hideKeyboardFrom(getContext(), view);
             }
         });
 
