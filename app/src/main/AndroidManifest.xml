@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/kiribati_ic_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.ejd.kiribatitranslate.MainActivity">
+        <activity android:name="com.ejd.kiribatitranslate.MainActivity" android:screenOrientation="portrait">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
