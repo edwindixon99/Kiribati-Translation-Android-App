@@ -2,8 +2,6 @@ package com.ejd.kiribatitranslate;
 
 import android.app.Activity;
 import android.content.Context;
-import android.text.Html;
-import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
@@ -30,8 +28,7 @@ public class Utility {
 
 
         if (queriedPhrases.size() == 0) {
-            searchResults.setText(Html.fromHtml("No results found for '" + queryString + "'. \n\ne aki reke te taeka anne '" + queryString +"'.\n\nCheck out <a href='http://kiribatitranslate.com'>kiribatitranslate.com</a> for more translations and log in to contribute to the dictionary"));
-            searchResults.setMovementMethod(LinkMovementMethod.getInstance());
+            searchResults.setText("No results found for '" + queryString + "' \ne aki reke te taeka anne '" + queryString +"'");
         } else {
             for (String translation : queriedPhrases) {
                 builder.append(translation);
